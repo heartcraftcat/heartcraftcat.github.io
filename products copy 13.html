@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品信息 - 米哈游风格官网示例</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav id="main-nav">
+        <ul>
+            <li><a href="index.html" data-zh="首页" data-en="Home">首页</a></li>
+            <li><a href="products.html" data-zh="产品信息" data-en="Products">产品信息</a></li>
+            <li><a href="about.html" data-zh="了解我们" data-en="About Us">了解我们</a></li>
+            <li><a href="join.html" data-zh="加入我们" data-en="Join Us">加入我们</a></li>
+            <li><a href="updates.html" data-zh="更新日志" data-en="Updates">更新日志</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1 data-zh="产品信息" data-en="Product Information">产品信息</h1>
+    </header>
+
+    <main id="section2">
+        <div class="carousel">
+            <div class="carousel-item active">
+                <img src="images/game1.png" alt="崩坏3" class="carousel-image">
+                <div class="carousel-text">
+                    <h3 data-zh="崩坏3" data-en="Honkai Impact 3rd">崩坏3</h3>
+                    <p data-zh="体验3D动作冒险，感受刺激的战斗场面。" data-en="Experience 3D action adventure and thrilling battles.">体验3D动作冒险，感受刺激的战斗场面。</p>
+                    <a href="#" data-zh="了解更多" data-en="Learn More">了解更多</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="images/game2.png" alt="原神" class="carousel-image">
+                <div class="carousel-text">
+                    <h3 data-zh="原神" data-en="Genshin Impact">原神</h3>
+                    <p data-zh="踏入一个广阔的开放世界，与伙伴一同展开冒险。" data-en="Step into a vast open world and embark on adventures with friends.">踏入一个广阔的开放世界，与伙伴一同展开冒险。</p>
+                    <a href="#" data-zh="了解更多" data-en="Learn More">了解更多</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="images/game3.png" alt="未定事件簿" class="carousel-image">
+                <div class="carousel-text">
+                    <h3 data-zh="未定事件簿" data-en="Tears of Themis">未定事件簿</h3>
+                    <p data-zh="解开神秘事件，发现背后的真相。" data-en="Uncover mysterious events and discover the truth behind them.">解开神秘事件，发现背后的真相。</p>
+                    <a href="#" data-zh="了解更多" data-en="Learn More">了解更多</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="images/game4.png" alt="星穹铁道" class="carousel-image">
+                <div class="carousel-text">
+                    <h3 data-zh="星穹铁道" data-en="Honkai: Star Rail">星穹铁道</h3>
+                    <p data-zh="在奇幻的星际世界中探索未知，解开宇宙的秘密。" data-en="Explore the unknown in a fantasy interstellar world and uncover the secrets of the universe.">在奇幻的星际世界中探索未知，解开宇宙的秘密。</p>
+                    <a href="#" data-zh="了解更多" data-en="Learn More">了解更多</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-thumbnails">
+            <img src="images/game1icon.png" alt="崩坏3缩略图" class="thumbnail active" data-index="0">
+            <img src="images/game2icon.png" alt="原神缩略图" class="thumbnail" data-index="1">
+            <img src="images/game3icon.png" alt="未定事件簿缩略图" class="thumbnail" data-index="2">
+            <img src="images/game4icon.png" alt="星穹铁道缩略图" class="thumbnail" data-index="3">
+        </div>
+    </main>
+
+    <footer>
+        <p data-zh="版权所有 &copy; 2024 米哈游风格官网示例" data-en="All Rights Reserved &copy; 2024 MiHoYo Style Website Sample">版权所有 &copy; 2024 米哈游风格官网示例</p>
+    </footer>
+
+    <script>
+        'use strict';
+
+        const items = document.querySelectorAll('.carousel-item');
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        let carouselIndex = 0; 
+        let carouselInterval;
+
+        function setCarouselItem(index) {
+            items.forEach((item, i) => {
+                item.classList.remove('active', 'carousel-item-exit');
+                if (i === carouselIndex) {
+                    item.classList.add('carousel-item-exit');
+                }
+            });
+            thumbnails.forEach((thumbnail) => thumbnail.classList.remove('active'));
+
+            items[index].classList.add('active');
+            thumbnails[index].classList.add('active');
+            carouselIndex = index;
+            resetCarouselInterval();
+        }
+
+        function autoSwitchCarousel() {
+            carouselIndex = (carouselIndex + 1) % items.length;
+            setCarouselItem(carouselIndex);
+        }
+
+        function resetCarouselInterval() {
+            clearInterval(carouselInterval);
+            carouselInterval = setInterval(autoSwitchCarousel, 5000);
+        }
+
+        thumbnails.forEach((thumbnail) => {
+            thumbnail.addEventListener('click', () => {
+                const index = parseInt(thumbnail.getAttribute('data-index'));
+                setCarouselItem(index);
+            });
+        });
+
+        carouselInterval = setInterval(autoSwitchCarousel, 5000);
+
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                clearInterval(carouselInterval);
+            } else {
+                resetCarouselInterval();
+            }
+        });
+    </script>
+</body>
+</html>
